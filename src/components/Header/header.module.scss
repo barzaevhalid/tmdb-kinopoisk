@@ -1,0 +1,16 @@
+.logo {
+  width: 200px;
+}
+.nav {
+}
+.menu {
+  display: flex;
+  gap: 25px;
+  font-weight: 600;
+}
+.menu__item {
+  cursor: pointer;
+  &:hover {
+    color: rgba(13, 102, 255, 0.622);
+  }
+}
