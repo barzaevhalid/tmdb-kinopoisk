@@ -73,7 +73,7 @@ export default function Main() {
                 sx={{
                   width: "500px",
                   borderRadius: 2,
-                  bgcolor: "background.default",
+                  bgcolor: "background.paper",
                   "& .MuiOutlinedInput-root": {
                     "& fieldset": {
                       border: "none",
