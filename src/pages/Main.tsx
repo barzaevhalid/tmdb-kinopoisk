@@ -125,8 +125,9 @@ export default function Main() {
           <Box
             sx={{
               paddingTop: "24px",
-              display: "flex",
-              justifyContent: "space-between",
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              gap: "24px",
             }}
           >
             {Array(6)

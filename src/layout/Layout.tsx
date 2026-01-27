@@ -12,6 +12,7 @@ export default function Layout() {
           display: "flex",
           flexDirection: "column",
           minHeight: "100vh",
+          overflow: "hidden",
         }}
       >
         <Header />

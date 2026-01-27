@@ -13,13 +13,13 @@ export default function Header() {
   return (
     <Box
       component="header"
-      sx={(theme) => ({
+      sx={{
         position: "sticky", // или fixed
         zIndex: 1000, // выше секции
         padding: "16px",
         boxShadow: "1px 1px 1px 1px rgba(191,191,191,0.75);",
-        background: theme.palette.background.paper,
-      })}
+        bgcolor: "background.paper",
+      }}
     >
       <Box
         sx={{
