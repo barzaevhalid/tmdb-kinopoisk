@@ -8,8 +8,13 @@ import moon from "../../assets/moon.png";
 import s from "./header.module.scss";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../../redux/themeSlice";
+import type { RootState } from "../../redux/store";
+
 export default function Header() {
-  const [changeTheme, setChangeTheme] = useState(true);
+  const mode = useSelector((state: RootState) => state.theme.mode);
+  const dispatch = useDispatch();
   return (
     <Box
       component="header"
@@ -61,12 +66,12 @@ export default function Header() {
             border: "1px solid #ccc",
             p: 0,
           }}
-          onClick={() => setChangeTheme((prev) => !prev)}
+          onClick={() => dispatch(toggleTheme())}
         >
           <Box
             component="img"
-            src={changeTheme ? sun : moon}
-            alt={changeTheme ? "sun" : "moon"}
+            src={mode === "light" ? sun : moon}
+            alt={mode === "light" ? "sun" : "moon"}
             sx={{
               width: 24,
               height: 24,

@@ -1,4 +1,5 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
+import CustomCard from "../components/Card";
 
 export default function Search() {
   return (
@@ -47,9 +48,25 @@ export default function Search() {
           search
         </Button>
       </Box>
-      <Typography component="p" sx={{ color: "gray" }}>
-        Enter a movie title to start searching.
+      <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "600" }}>
+        Results for "avatar"
       </Typography>
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(5, 1fr)",
+          gap: "24px",
+        }}
+      >
+        {/* <Typography component="p" sx={{ color: "gray" }}>
+          Enter a movie title to start searching.
+        </Typography> */}
+        {Array(10)
+          .fill(null)
+          .map(() => (
+            <CustomCard />
+          ))}
+      </Box>
     </Box>
   );
 }

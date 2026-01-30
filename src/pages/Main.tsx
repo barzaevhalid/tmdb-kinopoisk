@@ -1,17 +1,60 @@
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  CardMedia,
-  Card,
-  IconButton,
-} from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Box, Button, Typography, TextField, Skeleton } from "@mui/material";
+
 import { Link } from "react-router-dom";
+import {
+  useGetPopularMoviesQuery,
+  useGetNowPlayingMoviesQuery,
+  useGetTopRatedMoviesQuery,
+  useGetUpcomingMoviesQuery,
+} from "../redux/moviesApi";
+import { LinearProgress } from "@mui/material";
+
+import CustomCard from "../components/Card";
+import { useMemo } from "react";
+
 export default function Main() {
+  const popular = useGetPopularMoviesQuery();
+  const topRated = useGetTopRatedMoviesQuery();
+  const upcoming = useGetUpcomingMoviesQuery();
+  const nowPlaying = useGetNowPlayingMoviesQuery();
+
+  const isFetching =
+    popular.isFetching ||
+    topRated.isFetching ||
+    upcoming.isFetching ||
+    nowPlaying.isFetching;
+
+  const isLoading =
+    popular.isLoading &&
+    topRated.isLoading &&
+    upcoming.isLoading &&
+    nowPlaying.isLoading;
+
+  if (popular.error) return <div>error</div>;
+
+  const randomMovie = useMemo(() => {
+    const movies = popular.data?.results ?? [];
+    const randomIndex = movies.length
+      ? Math.floor(Math.random() * movies.length)
+      : 0;
+
+    return movies[randomIndex];
+  }, [popular.data?.results]);
+
+  const backdrop = randomMovie?.backdrop_path;
   return (
     <>
+      {isFetching && (
+        <LinearProgress
+          sx={{
+            position: "fixed",
+            top: 82,
+            left: 0,
+            width: "100%",
+            zIndex: 2000,
+          }}
+        />
+      )}
       <Box component="section">
         <Box
           component="section"
@@ -23,7 +66,7 @@ export default function Main() {
             marginRight: "calc(50% - 50vw)",
             backgroundImage: `
       linear-gradient(to bottom, rgba(18,18,18,0) 0%, rgb(18,18,18) 80%),
-      url("https://static0.srcdn.com/wordpress/wp-content/uploads/2020/05/SpongeBob-and-Patrick-Featured-Image.jpg?q=50&fit=crop&w=1600&h=900&dpr=1.5")
+      url(https://image.tmdb.org/t/p/original${backdrop})
     `,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -130,75 +173,178 @@ export default function Main() {
               gap: "24px",
             }}
           >
-            {Array(6)
-              .fill(null)
-              .map(() => (
-                <Box>
-                  <Card
-                    sx={{
-                      width: "180px",
-                      height: "280px",
-                      position: "relative",
-                      cursor: "pointer",
-                      overflow: "hidden",
-                      "&:hover .icon": {
-                        transform: "translateY(0) scale(1)",
-                        opacity: 1,
-                      },
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <IconButton
-                      className="icon"
-                      sx={{
-                        backgroundColor: "rgba(0,0,0,0.5)",
-                        position: "absolute",
-                        top: 10,
-                        right: 10,
-                        transform: "translateY(-20px) scale(0.95)", // начальное состояние: чуть выше и меньше
-                        opacity: 0, // начально прозрачная
-                        transition: "transform 0.4s ease, opacity 0.4s ease", // плавность
-                        color: "#fff",
-                        zIndex: 10,
-                        "&:hover": {
-                          backgroundColor: "primary.main",
-                        },
-                      }}
-                    >
-                      <FavoriteIcon />
-                    </IconButton>
-                    <CardMedia
-                      sx={{
-                        objectFit: "cover",
-                        transition: "transform 0.3s ease",
-                        "&:hover": {
-                          transform: "scale(1.1)",
-                        },
-                      }}
-                      component="img"
-                      alt="green iguana"
-                      image="https://image.tmdb.org/t/p/w185/5bxrxnRaxZooBAxgUVBZ13dpzC7.jpg"
-                    />
-                    <Box
-                      sx={{
-                        display: "flex",
-                        position: "absolute",
-                        bottom: "10px",
-                        right: "10px",
-                        width: "40px",
-                        height: "40px",
-                        backgroundColor: "#16a34a",
-                        borderRadius: "100%",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      9.0
-                    </Box>
-                  </Card>
-                  <Link to="">The rip</Link>
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Box key={i}>
+                  <Skeleton variant="rectangular" width={210} height={1} />
                 </Box>
-              ))}
+              ))
+            ) : popular.data?.results?.length ? (
+              popular.data.results
+                .slice(0, 6)
+                .map((movie) => <CustomCard movie={movie} />)
+            ) : (
+              <Typography variant="h2">Нет данных</Typography>
+            )}
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            paddingBottom: "64px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h2" sx={{ fontSize: 24 }}>
+              Top Rated Movies
+            </Typography>
+            <Link to="#">
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{
+                  borderColor: "#5c5a5a6c",
+                  color: "primary.contrastText",
+                }}
+              >
+                View more
+              </Button>
+            </Link>
+          </Box>
+          <Box
+            sx={{
+              paddingTop: "24px",
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              gap: "24px",
+            }}
+          >
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  variant="rectangular"
+                  width={210}
+                  height={170}
+                />
+              ))
+            ) : topRated.data?.results?.length ? (
+              topRated.data.results
+                .slice(0, 6)
+                .map((movie) => <CustomCard movie={movie} />)
+            ) : (
+              <Typography> Нет данных</Typography>
+            )}
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            paddingBottom: "64px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h2" sx={{ fontSize: 24 }}>
+              Upcoming Movies
+            </Typography>
+            <Link to="#">
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{
+                  borderColor: "#5c5a5a6c",
+                  color: "primary.contrastText",
+                }}
+              >
+                View more
+              </Button>
+            </Link>
+          </Box>
+          <Box
+            sx={{
+              paddingTop: "24px",
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              gap: "24px",
+            }}
+          >
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  variant="rectangular"
+                  width={210}
+                  height={170}
+                />
+              ))
+            ) : upcoming.data?.results?.length ? (
+              upcoming.data.results
+                .slice(0, 6)
+                .map((movie) => <CustomCard movie={movie} />)
+            ) : (
+              <Typography>Нет данных</Typography>
+            )}
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            paddingBottom: "64px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <Typography variant="h2" sx={{ fontSize: 24 }}>
+              Now Playing Movies
+            </Typography>
+            <Link to="#">
+              <Button
+                size="small"
+                variant="outlined"
+                sx={{
+                  borderColor: "#5c5a5a6c",
+                  color: "primary.contrastText",
+                }}
+              >
+                View more
+              </Button>
+            </Link>
+          </Box>
+          <Box
+            sx={{
+              paddingTop: "24px",
+              display: "grid",
+              gridTemplateColumns: "repeat(6, 1fr)",
+              gap: "24px",
+            }}
+          >
+            {isLoading ? (
+              Array.from({ length: 6 }).map((_, i) => (
+                <Skeleton
+                  key={i}
+                  variant="rectangular"
+                  width={210}
+                  height={170}
+                />
+              ))
+            ) : nowPlaying.data?.results.length ? (
+              nowPlaying.data.results
+                .slice(0, 6)
+                .map((movie) => <CustomCard movie={movie} />)
+            ) : (
+              <Typography>Нет данных</Typography>
+            )}
           </Box>
         </Box>
       </Box>
