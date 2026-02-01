@@ -127,11 +127,11 @@ export default function FilteredMovies() {
               gap: "24px",
             }}
           >
-            {Array(10)
+            {/* {Array(10)
               .fill(null)
               .map(() => (
                 <CustomCard />
-              ))}
+              ))} */}
           </Box>
           <Box
             sx={{

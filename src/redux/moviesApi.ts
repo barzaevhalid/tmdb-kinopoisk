@@ -19,8 +19,8 @@ export const moviesApi = createApi({
     },
   }),
   endpoints: (builder) => ({
-    getPopularMovies: builder.query<MoviesResponseDto, void>({
-      query: () => "/movie/popular?page=1",
+    getPopularMovies: builder.query<MoviesResponseDto, number>({
+      query: (page: number) => `/movie/popular?page=${page}`,
     }),
     getTopRatedMovies: builder.query<MoviesResponseDto, void>({
       query: () => "/movie/top_rated?page=1",
