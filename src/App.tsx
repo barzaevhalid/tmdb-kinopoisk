@@ -5,6 +5,7 @@ import CategoryMovies from "./pages/CategoryMovies";
 import Favorites from "./pages/Favorites";
 import Search from "./pages/Search";
 import FilteredMovies from "./pages/FilteredMovies";
+import MovieDetail from "./pages/MovieDetail";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/search" element={<Search />} />
         <Route path="/filtered" element={<FilteredMovies />} />
+        <Route path="/movie/:id" element={<MovieDetail />} />
       </Route>
     </Routes>
   );

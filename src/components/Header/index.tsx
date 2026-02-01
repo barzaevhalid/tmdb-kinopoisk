@@ -44,10 +44,10 @@ export default function Header() {
               <Link to="/">Main</Link>
             </li>
             <li className={s.menu__item}>
-              <Link to="/categories">Category mobies</Link>
+              <Link to="/categories">Category movies</Link>
             </li>
             <li className={s.menu__item}>
-              <Link to="/filtered"> Filtered mobies</Link>
+              <Link to="/filtered"> Filtered movies</Link>
             </li>
             <li className={s.menu__item}>
               <Link to="/search">Search</Link>

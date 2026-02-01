@@ -1,4 +1,4 @@
-import { IconButton, CardMedia, Box, Card } from "@mui/material";
+import { IconButton, CardMedia, Box, Card, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import type { MovieDto } from "../../redux/movies.dto";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ export default function CustomCard({ movie }: Props) {
   const movieImg = `https://image.tmdb.org/t/p/w185${movie.poster_path}`;
 
   return (
-    <Box>
+    <Box component={Link} to={`/movie/${movie.id}`}>
       <Card
         sx={{
           position: "relative",
@@ -71,7 +71,7 @@ export default function CustomCard({ movie }: Props) {
           {movie.vote_average.toFixed(1)}
         </Box>
       </Card>
-      <Link to="">{movie.title}</Link>
+      <Typography>{movie.title}</Typography>
     </Box>
   );
 }

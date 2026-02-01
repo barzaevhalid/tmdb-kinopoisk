@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import type { MoviesResponseDto } from "./movies.dto";
+import type {
+  CastRoot,
+  DetailDto,
+  MovieDto,
+  MoviesResponseDto,
+} from "./movies.dto";
 
 export const moviesApi = createApi({
   reducerPath: "moviesApi",
@@ -26,6 +31,15 @@ export const moviesApi = createApi({
     getNowPlayingMovies: builder.query<MoviesResponseDto, void>({
       query: () => "/movie/now_playing?page=1",
     }),
+    getMovieById: builder.query<DetailDto, number>({
+      query: (id) => `/movie/${id}`,
+    }),
+    getCreditsByMovieId: builder.query<CastRoot, number>({
+      query: (id) => `/movie/${id}/credits`,
+    }),
+    getSimilarMoviesById: builder.query<MoviesResponseDto, number>({
+      query: (id) => `/movie/${id}/similar`,
+    }),
   }),
 });
 export const {
@@ -33,4 +47,7 @@ export const {
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
   useGetNowPlayingMoviesQuery,
+  useGetMovieByIdQuery,
+  useGetCreditsByMovieIdQuery,
+  useGetSimilarMoviesByIdQuery,
 } = moviesApi;

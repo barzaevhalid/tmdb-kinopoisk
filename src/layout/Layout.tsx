@@ -19,9 +19,11 @@ export default function Layout() {
 
         <Box
           sx={{
-            width: "1200px",
+            width: "1240px",
             mx: "auto",
             flex: 1,
+            bgcolor: "background.paper",
+            padding: "0 20px",
           }}
         >
           <Outlet />
