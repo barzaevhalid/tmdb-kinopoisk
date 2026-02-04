@@ -1,6 +1,6 @@
 import { Box, Button, Typography, TextField, Skeleton } from "@mui/material";
 
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
 import {
   useGetPopularMoviesQuery,
   useGetNowPlayingMoviesQuery,
@@ -9,14 +9,14 @@ import {
 } from "../redux/moviesApi";
 import { LinearProgress } from "@mui/material";
 
-import CustomCard from "../components/Card";
 import { useMemo } from "react";
+import MoviesGrid from "../components/MoviesGrid";
 
 export default function Main() {
-  const popular = useGetPopularMoviesQuery();
-  const topRated = useGetTopRatedMoviesQuery();
-  const upcoming = useGetUpcomingMoviesQuery();
-  const nowPlaying = useGetNowPlayingMoviesQuery();
+  const popular = useGetPopularMoviesQuery(1);
+  const topRated = useGetTopRatedMoviesQuery(1);
+  const upcoming = useGetUpcomingMoviesQuery(1);
+  const nowPlaying = useGetNowPlayingMoviesQuery(1);
 
   const isFetching =
     popular.isFetching ||
@@ -152,7 +152,7 @@ export default function Main() {
             <Typography variant="h2" sx={{ fontSize: 24 }}>
               Popular Movies
             </Typography>
-            <Link to="#">
+            <Link to="categories/popular">
               <Button
                 size="small"
                 variant="outlined"
@@ -165,28 +165,12 @@ export default function Main() {
               </Button>
             </Link>
           </Box>
-          <Box
-            sx={{
-              paddingTop: "24px",
-              display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              gap: "24px",
-            }}
-          >
-            {isLoading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <Box key={i}>
-                  <Skeleton variant="rectangular" width={210} height={1} />
-                </Box>
-              ))
-            ) : popular.data?.results?.length ? (
-              popular.data.results
-                .slice(0, 6)
-                .map((movie) => <CustomCard movie={movie} />)
-            ) : (
-              <Typography variant="h2">Нет данных</Typography>
-            )}
-          </Box>
+
+          <MoviesGrid
+            isLoading={isLoading}
+            movies={popular.data?.results ?? []}
+            limit={6}
+          />
         </Box>
         <Box
           sx={{
@@ -202,7 +186,7 @@ export default function Main() {
             <Typography variant="h2" sx={{ fontSize: 24 }}>
               Top Rated Movies
             </Typography>
-            <Link to="#">
+            <Link to="categories/top-rated">
               <Button
                 size="small"
                 variant="outlined"
@@ -215,31 +199,11 @@ export default function Main() {
               </Button>
             </Link>
           </Box>
-          <Box
-            sx={{
-              paddingTop: "24px",
-              display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              gap: "24px",
-            }}
-          >
-            {isLoading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton
-                  key={i}
-                  variant="rectangular"
-                  width={210}
-                  height={170}
-                />
-              ))
-            ) : topRated.data?.results?.length ? (
-              topRated.data.results
-                .slice(0, 6)
-                .map((movie) => <CustomCard movie={movie} />)
-            ) : (
-              <Typography> Нет данных</Typography>
-            )}
-          </Box>
+          <MoviesGrid
+            isLoading={isLoading}
+            movies={topRated.data?.results ?? []}
+            limit={6}
+          />
         </Box>
         <Box
           sx={{
@@ -255,7 +219,7 @@ export default function Main() {
             <Typography variant="h2" sx={{ fontSize: 24 }}>
               Upcoming Movies
             </Typography>
-            <Link to="#">
+            <Link to="categories/upcoming">
               <Button
                 size="small"
                 variant="outlined"
@@ -268,31 +232,11 @@ export default function Main() {
               </Button>
             </Link>
           </Box>
-          <Box
-            sx={{
-              paddingTop: "24px",
-              display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              gap: "24px",
-            }}
-          >
-            {isLoading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton
-                  key={i}
-                  variant="rectangular"
-                  width={210}
-                  height={170}
-                />
-              ))
-            ) : upcoming.data?.results?.length ? (
-              upcoming.data.results
-                .slice(0, 6)
-                .map((movie) => <CustomCard movie={movie} />)
-            ) : (
-              <Typography>Нет данных</Typography>
-            )}
-          </Box>
+          <MoviesGrid
+            isLoading={isLoading}
+            movies={upcoming.data?.results ?? []}
+            limit={6}
+          />
         </Box>
         <Box
           sx={{
@@ -308,7 +252,7 @@ export default function Main() {
             <Typography variant="h2" sx={{ fontSize: 24 }}>
               Now Playing Movies
             </Typography>
-            <Link to="#">
+            <Link to="categories/now-playing">
               <Button
                 size="small"
                 variant="outlined"
@@ -321,31 +265,11 @@ export default function Main() {
               </Button>
             </Link>
           </Box>
-          <Box
-            sx={{
-              paddingTop: "24px",
-              display: "grid",
-              gridTemplateColumns: "repeat(6, 1fr)",
-              gap: "24px",
-            }}
-          >
-            {isLoading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <Skeleton
-                  key={i}
-                  variant="rectangular"
-                  width={210}
-                  height={170}
-                />
-              ))
-            ) : nowPlaying.data?.results.length ? (
-              nowPlaying.data.results
-                .slice(0, 6)
-                .map((movie) => <CustomCard movie={movie} />)
-            ) : (
-              <Typography>Нет данных</Typography>
-            )}
-          </Box>
+          <MoviesGrid
+            isLoading={isLoading}
+            movies={nowPlaying.data?.results ?? []}
+            limit={6}
+          />
         </Box>
       </Box>
     </>

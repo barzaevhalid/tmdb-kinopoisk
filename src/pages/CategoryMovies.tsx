@@ -13,12 +13,12 @@ import { Link } from "react-router-dom";
 import { useGetPopularMoviesQuery } from "../redux/moviesApi";
 
 export default function CategoryMovies() {
-  const popular = useGetPopularMoviesQuery();
+  const popular = useGetPopularMoviesQuery(1);
   console.log(popular);
 
   return (
     <Box component="section" sx={{ paddingTop: "24px" }}>
-      {/* <Box
+      <Box
         sx={{
           marigin: "0, auto",
           display: "flex",
@@ -56,7 +56,7 @@ export default function CategoryMovies() {
         <Button color="primary" component={Link} to="#">
           Now Playing Movies
         </Button>
-      </Box> */}
+      </Box>
       <Box
         sx={{
           paddingBottom: "40px",

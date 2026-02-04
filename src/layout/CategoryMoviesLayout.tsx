@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 export default function CategoryMoviesLayout() {
   const location = useLocation();
@@ -19,7 +19,7 @@ export default function CategoryMoviesLayout() {
     >
       <Box
         sx={{
-          marigin: "0, auto",
+          margin: "0, auto",
           display: "flex",
           justifyContent: "center",
           gap: "24px",
@@ -29,8 +29,9 @@ export default function CategoryMoviesLayout() {
           const isActive = location.pathname.endsWith(link.to);
           return (
             <Button
+              key={link.to}
               variant={isActive ? "contained" : "outlined"}
-              component={Link}
+              component={NavLink}
               to={link.to}
               sx={{
                 color: "primary.contrastText",

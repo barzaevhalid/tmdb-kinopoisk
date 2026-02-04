@@ -14,32 +14,23 @@ import { Link } from "react-router-dom";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CustomCard from "../components/Card";
 import { useState } from "react";
+import CustomPagination from "../components/CustomPagination";
+import MoviesGrid from "../components/MoviesGrid";
+import { usePageParam } from "../hooks/usePageParams";
 
 export default function PopularMovies() {
-  const [page, setPage] = useState(1);
+  const { page, setPage } = usePageParam();
+  console.log(page);
 
   const { data, isLoading, isFetching } = useGetPopularMoviesQuery(page);
 
   return (
     <>
-      <Box
-        sx={{
-          paddingTop: "24px",
-          display: "grid",
-          gridTemplateColumns: "repeat(6, 1fr)",
-          gap: "24px",
-        }}
-      >
-        {isLoading ? (
-          Array.from({ length: 6 }).map((_, i) => (
-            <Skeleton key={i} variant="rectangular" width={210} height={170} />
-          ))
-        ) : data?.results?.length ? (
-          data.results.map((movie) => <CustomCard movie={movie} />)
-        ) : (
-          <Typography> Нет данных</Typography>
-        )}
-      </Box>
+      <MoviesGrid
+        movies={data?.results || []}
+        isLoading={isLoading}
+        columns={5}
+      />
 
       <Box
         sx={{
@@ -48,14 +39,11 @@ export default function PopularMovies() {
           marginBottom: "30px",
         }}
       >
-        <Stack>
-          <Pagination
-            onChange={(_, value) => setPage(value)}
-            color="primary"
-            count={data?.total_pages}
-            page={page}
-          />
-        </Stack>
+        <CustomPagination
+          setPage={setPage}
+          total_pages={data?.total_pages}
+          page={page}
+        />
       </Box>
     </>
   );

@@ -9,7 +9,7 @@ export default function CustomCard({ movie }: Props) {
   const movieImg = `https://image.tmdb.org/t/p/w185${movie.poster_path}`;
 
   return (
-    <Box component={Link} to={`/movie/${movie.id}`}>
+    <Box component={Link} to={`/movie/${movie.id}`} sx={{ width: "100%" }}>
       <Card
         sx={{
           position: "relative",

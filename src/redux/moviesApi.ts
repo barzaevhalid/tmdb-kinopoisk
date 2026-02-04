@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type {
   CastRoot,
   DetailDto,
+  Genres,
   MovieDto,
   MoviesResponseDto,
 } from "./movies.dto";
@@ -20,16 +21,16 @@ export const moviesApi = createApi({
   }),
   endpoints: (builder) => ({
     getPopularMovies: builder.query<MoviesResponseDto, number>({
-      query: (page: number) => `/movie/popular?page=${page}`,
+      query: (page: number = 1) => `/movie/popular?page=${page}`,
     }),
-    getTopRatedMovies: builder.query<MoviesResponseDto, void>({
-      query: () => "/movie/top_rated?page=1",
+    getTopRatedMovies: builder.query<MoviesResponseDto, number>({
+      query: (page: number = 1) => `/movie/top_rated?page=${page}`,
     }),
-    getUpcomingMovies: builder.query<MoviesResponseDto, void>({
-      query: () => "/movie/upcoming?page=1",
+    getUpcomingMovies: builder.query<MoviesResponseDto, number>({
+      query: (page: number = 1) => `/movie/upcoming?page=${page}`,
     }),
-    getNowPlayingMovies: builder.query<MoviesResponseDto, void>({
-      query: () => "/movie/now_playing?page=1",
+    getNowPlayingMovies: builder.query<MoviesResponseDto, number>({
+      query: (page: number = 1) => `/movie/now_playing?page=${page}`,
     }),
     getMovieById: builder.query<DetailDto, number>({
       query: (id) => `/movie/${id}`,
@@ -39,6 +40,29 @@ export const moviesApi = createApi({
     }),
     getSimilarMoviesById: builder.query<MoviesResponseDto, number>({
       query: (id) => `/movie/${id}/similar`,
+    }),
+    getAllGenres: builder.query<Genres, void>({
+      query: () => "/genre/movie/list",
+    }),
+    getSortedMovies: builder.query({
+      query: ({ selectedGenres, rating, sort, page }) => {
+        const params = {
+          with_genres:
+            selectedGenres && selectedGenres.length > 0
+              ? selectedGenres.join(",")
+              : undefined,
+          sort_by: sort,
+
+          "vote_average.gte": rating[0],
+          "vote_average.lte": rating[1],
+          page: page,
+        };
+
+        return {
+          url: "/discover/movie",
+          params: params,
+        };
+      },
     }),
   }),
 });
@@ -50,4 +74,6 @@ export const {
   useGetMovieByIdQuery,
   useGetCreditsByMovieIdQuery,
   useGetSimilarMoviesByIdQuery,
+  useGetAllGenresQuery,
+  useGetSortedMoviesQuery,
 } = moviesApi;
