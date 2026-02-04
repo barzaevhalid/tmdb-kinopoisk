@@ -1,6 +1,6 @@
 import { Box, Button, Typography, TextField, Skeleton } from "@mui/material";
 
-import { data, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   useGetPopularMoviesQuery,
   useGetNowPlayingMoviesQuery,
@@ -9,8 +9,10 @@ import {
 } from "../redux/moviesApi";
 import { LinearProgress } from "@mui/material";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import MoviesGrid from "../components/MoviesGrid";
+import { useAppDispatch } from "../redux/store";
+import { setSearchQuery } from "../redux/searchSlice";
 
 export default function Main() {
   const popular = useGetPopularMoviesQuery(1);
@@ -18,6 +20,19 @@ export default function Main() {
   const upcoming = useGetUpcomingMoviesQuery(1);
   const nowPlaying = useGetNowPlayingMoviesQuery(1);
 
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (search.trim()) {
+      dispatch(setSearchQuery(search));
+      navigate("/search");
+    }
+    dispatch(setSearchQuery(search));
+  };
   const isFetching =
     popular.isFetching ||
     topRated.isFetching ||
@@ -101,6 +116,7 @@ export default function Main() {
               Browse highlighted titles from TMDB
             </Typography>
             <Box
+              onSubmit={handleSearch}
               component="form"
               sx={{
                 display: "flex",
@@ -112,6 +128,8 @@ export default function Main() {
               }}
             >
               <TextField
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search movie"
                 sx={{
                   width: "500px",
@@ -124,7 +142,12 @@ export default function Main() {
                   },
                 }}
               />
-              <Button variant="contained" color="primary">
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                disabled={!search}
+              >
                 search
               </Button>
             </Box>

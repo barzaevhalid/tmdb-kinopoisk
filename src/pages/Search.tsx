@@ -1,7 +1,30 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import CustomCard from "../components/Card";
+
+import MoviesGrid from "../components/MoviesGrid";
+import { useSelector } from "react-redux";
+import { type RootState } from "../redux/store";
+import { useState } from "react";
+
+import { useGetMovieQuery } from "../redux/moviesApi";
 
 export default function Search() {
+  const queryFromStore = useSelector((state: RootState) => state.search.query);
+
+  const [inputValue, setInputValue] = useState(queryFromStore);
+  const [requestQuery, setRequestQuery] = useState(queryFromStore);
+
+  const movies = useGetMovieQuery(requestQuery, {
+    skip: !requestQuery,
+  });
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (inputValue.trim()) {
+      setRequestQuery(inputValue);
+    }
+  };
+
   return (
     <Box
       component="section"
@@ -22,6 +45,7 @@ export default function Search() {
         Search Results
       </Typography>
       <Box
+        onSubmit={handleSearch}
         component="form"
         sx={{
           display: "flex",
@@ -32,6 +56,8 @@ export default function Search() {
         }}
       >
         <TextField
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
           placeholder="Search movie"
           sx={{
             width: "500px",
@@ -44,29 +70,24 @@ export default function Search() {
             },
           }}
         />
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={!inputValue}
+        >
           search
         </Button>
       </Box>
       <Typography variant="h2" sx={{ fontSize: "28px", fontWeight: "600" }}>
         Results for "avatar"
       </Typography>
-      <Box
-        sx={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: "24px",
-        }}
-      >
-        {/* <Typography component="p" sx={{ color: "gray" }}>
-          Enter a movie title to start searching.
-        </Typography> */}
-        {Array(10)
-          .fill(null)
-          .map(() => (
-            <CustomCard />
-          ))}
-      </Box>
+
+      <MoviesGrid
+        movies={movies.data?.results ?? []}
+        isLoading={movies.isLoading}
+        columns={5}
+      />
     </Box>
   );
 }
