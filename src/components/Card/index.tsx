@@ -19,7 +19,9 @@ export default function CustomCard({ movie }: Props) {
     e.preventDefault();
     dispatch(toggleFavorite(movie)); // Всё! Redux сам обновит и стейт, и LS
   };
-  const movieImg = `https://image.tmdb.org/t/p/w185${movie.poster_path}`;
+  const movieImg = movie.poster_path
+    ? `https://image.tmdb.org/t/p/w185${movie.poster_path}`
+    : "https://placehold.co/200x270?text=No+Poster";
 
   return (
     <Box component={Link} to={`/movie/${movie.id}`} sx={{ width: "100%" }}>
@@ -70,7 +72,7 @@ export default function CustomCard({ movie }: Props) {
             },
           }}
           component="img"
-          alt="green iguana"
+          alt={movie.title || "Movie poster"}
           image={movieImg}
         />
         <Box
@@ -90,7 +92,7 @@ export default function CustomCard({ movie }: Props) {
           {movie.vote_average.toFixed(1)}
         </Box>
       </Card>
-      <Typography>{movie.title}</Typography>
+      <Typography>{movie.title || "No Title"}</Typography>
     </Box>
   );
 }

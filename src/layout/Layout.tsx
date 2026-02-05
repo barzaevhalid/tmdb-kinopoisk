@@ -11,8 +11,6 @@ export default function Layout() {
     ),
   );
 
-  console.log(isGlobalLoading, "загрузка");
-
   return (
     <>
       <Box
