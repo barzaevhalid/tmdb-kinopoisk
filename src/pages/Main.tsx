@@ -7,7 +7,7 @@ import {
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
 } from "../redux/moviesApi";
-import { LinearProgress } from "@mui/material";
+// import { LinearProgress } from "@mui/material";
 
 import { useMemo, useState } from "react";
 import MoviesGrid from "../components/MoviesGrid";
@@ -33,11 +33,6 @@ export default function Main() {
     }
     dispatch(setSearchQuery(search));
   };
-  const isFetching =
-    popular.isFetching ||
-    topRated.isFetching ||
-    upcoming.isFetching ||
-    nowPlaying.isFetching;
 
   const isLoading =
     popular.isLoading &&
@@ -59,17 +54,6 @@ export default function Main() {
   const backdrop = randomMovie?.backdrop_path;
   return (
     <>
-      {isFetching && (
-        <LinearProgress
-          sx={{
-            position: "fixed",
-            top: 82,
-            left: 0,
-            width: "100%",
-            zIndex: 2000,
-          }}
-        />
-      )}
       <Box component="section">
         <Box
           component="section"

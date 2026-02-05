@@ -27,17 +27,6 @@ export default function MovieDetail() {
 
   return (
     <>
-      {isFetching && (
-        <LinearProgress
-          sx={{
-            position: "fixed",
-            top: 82,
-            left: 0,
-            width: "100%",
-            zIndex: 2000,
-          }}
-        />
-      )}
       <Box
         component="section"
         sx={{
