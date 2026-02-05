@@ -1,34 +1,25 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import { useState, useEffect } from "react";
+import MoviesGrid from "../components/MoviesGrid";
+import { useAppSelector } from "../redux/store";
 
 export default function Favorites() {
+  const movies = useAppSelector((state) => state.favorites.items);
+
   return (
-    <Box
-      sx={{
-        paddingBlock: "32px",
-      }}
-    >
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-        <Typography
-          variant="h2"
-          sx={{
-            fontSize: "32px",
-            fontWeight: "600",
-          }}
-        >
-          Favorites
-        </Typography>
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: "repeat(5, 1fr)",
-            gap: "24px",
-          }}
-        ></Box>
-        <Typography component="p" sx={{ color: "gray" }}>
-          Add movies to favorites to see them on this page.
-        </Typography>
-      </Box>
+    <Box sx={{ padding: "32px" }}>
+      <Typography
+        variant="h2"
+        sx={{ fontSize: "28px", fontWeight: 600, mb: 4 }}
+      >
+        My Favorites
+      </Typography>
+
+      {movies.length > 0 ? (
+        <MoviesGrid isLoading={false} movies={movies} />
+      ) : (
+        <Typography>You haven't added any movies to favorites yet.</Typography>
+      )}
     </Box>
   );
 }

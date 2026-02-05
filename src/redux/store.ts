@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { moviesApi } from "./moviesApi";
 import themeReducer from "./themeSlice";
 import searchReducer from "./searchSlice";
+import favoriteMovies from "./favoriteMoviesSlice";
 import {
   useDispatch,
   useSelector,
@@ -11,6 +12,7 @@ export const store = configureStore({
   reducer: {
     theme: themeReducer,
     search: searchReducer,
+    favorites: favoriteMovies,
     [moviesApi.reducerPath]: moviesApi.reducer,
   },
   middleware: (getDefault) => getDefault().concat(moviesApi.middleware),

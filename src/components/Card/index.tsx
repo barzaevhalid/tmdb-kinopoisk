@@ -2,10 +2,23 @@ import { IconButton, CardMedia, Box, Card, Typography } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import type { MovieDto } from "../../redux/movies.dto";
 import { Link } from "react-router-dom";
+import { toggleFavorite } from "../../redux/favoriteMoviesSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 interface Props {
   movie: MovieDto;
 }
 export default function CustomCard({ movie }: Props) {
+  const dispatch = useAppDispatch();
+
+  const isFavorite = useAppSelector((state) =>
+    state.favorites.items.some((m: any) => m.id === movie.id),
+  );
+
+  const handleLikeClick = (e: any) => {
+    e.stopPropagation();
+    e.preventDefault();
+    dispatch(toggleFavorite(movie)); // Всё! Redux сам обновит и стейт, и LS
+  };
   const movieImg = `https://image.tmdb.org/t/p/w185${movie.poster_path}`;
 
   return (
@@ -19,10 +32,16 @@ export default function CustomCard({ movie }: Props) {
             transform: "translateY(0) scale(1)",
             opacity: 1,
           },
+          ".icon": {
+            transform: isFavorite && "translateY(0) scale(1)",
+            opacity: isFavorite && 1,
+            color: "yellow",
+          },
           marginBottom: "10px",
         }}
       >
         <IconButton
+          onClick={handleLikeClick}
           className="icon"
           sx={{
             backgroundColor: "rgba(0,0,0,0.5)",
