@@ -1,4 +1,4 @@
-import { colors, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 import type { ThemeOptions, Theme } from "@mui/material/styles";
 
 const lightPalette: ThemeOptions["palette"] = {
@@ -10,7 +10,7 @@ const lightPalette: ThemeOptions["palette"] = {
 
   background: {
     default: "#fff",
-    paper: "#cacfd92a",
+    paper: "#fff",
   },
 };
 
@@ -44,9 +44,8 @@ export const getTheme = (mode: "light" | "dark") =>
             border: "1px solid #848da439",
             fontWeight: 600,
             transition: "background-color .2s ease, color .2s ease",
-            "&:hover": {
-              color: "#4f46e5",
-            },
+
+            color: "#fff",
           },
           outlinedPrimary: ({ theme }: { theme: Theme }) => ({
             color: theme.palette.primary.contrastText,

@@ -144,9 +144,20 @@ export default function Main() {
               />
               <Button
                 variant="contained"
-                color="primary"
                 type="submit"
                 disabled={!search}
+                sx={{
+                  color: "fff",
+                  backgroundColor: "#2563eb",
+                  opacity: search ? "1" : ".6",
+                  "&.Mui-disabled": {
+                    backgroundColor: "rgba(37, 99, 235, 0.4)",
+                    color: "rgba(255, 255, 255, 0.5)",
+                  },
+                  "&:hover": {
+                    background: "#1d4ed8",
+                  },
+                }}
               >
                 search
               </Button>

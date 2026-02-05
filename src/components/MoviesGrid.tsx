@@ -29,7 +29,11 @@ export default function MoviesGrid({
       {isLoading &&
         Array.from({ length: limit ?? columns }).map((_, i) => (
           <Box key={i}>
-            <Skeleton variant="rectangular" width={210} height={170} />
+            <Skeleton
+              variant="rectangular"
+              sx={{ borderRadius: "12px" }}
+              height="270px"
+            />
           </Box>
         ))}
 
