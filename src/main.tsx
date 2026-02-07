@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./global.css";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import App from "./App.tsx";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { getTheme } from "./theme/theme.ts";
 import { Provider } from "react-redux";
 import { store, useAppSelector } from "./redux/store.ts";
@@ -14,9 +14,9 @@ function Root() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter basename="/tmdb-kinopoisk">
+      <HashRouter>
         <App />
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider>
   );
 }
