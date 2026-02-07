@@ -1,4 +1,4 @@
-import { Box, Button, Typography, TextField, Skeleton } from "@mui/material";
+import { Box, Button, Typography, TextField } from "@mui/material";
 
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -7,7 +7,6 @@ import {
   useGetTopRatedMoviesQuery,
   useGetUpcomingMoviesQuery,
 } from "../redux/moviesApi";
-// import { LinearProgress } from "@mui/material";
 
 import { useMemo, useState } from "react";
 import MoviesGrid from "../components/MoviesGrid";

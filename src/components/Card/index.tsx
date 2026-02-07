@@ -23,6 +23,12 @@ export default function CustomCard({ movie }: Props) {
     ? `https://image.tmdb.org/t/p/w185${movie.poster_path}`
     : "https://placehold.co/200x270?text=No+Poster";
 
+  const ratingBgColor =
+    movie.vote_average >= 7
+      ? "green"
+      : movie.vote_average < 5
+        ? "red"
+        : "orange";
   return (
     <Box component={Link} to={`/movie/${movie.id}`} sx={{ width: "100%" }}>
       <Card
@@ -37,7 +43,7 @@ export default function CustomCard({ movie }: Props) {
           ".icon": {
             transform: isFavorite && "translateY(0) scale(1)",
             opacity: isFavorite && 1,
-            color: "yellow",
+            color: isFavorite && "yellow",
           },
           marginBottom: "10px",
         }}
@@ -83,7 +89,7 @@ export default function CustomCard({ movie }: Props) {
             right: "10px",
             width: "40px",
             height: "40px",
-            backgroundColor: "#16a34a",
+            backgroundColor: ratingBgColor,
             borderRadius: "100%",
             justifyContent: "center",
             alignItems: "center",

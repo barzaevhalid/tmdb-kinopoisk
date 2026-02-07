@@ -7,7 +7,7 @@ import moon from "../../assets/moon.png";
 
 import s from "./header.module.scss";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+
 import { useDispatch, useSelector } from "react-redux";
 import { toggleTheme } from "../../redux/themeSlice";
 import type { RootState } from "../../redux/store";
@@ -19,8 +19,8 @@ export default function Header() {
     <Box
       component="header"
       sx={{
-        position: "sticky", // или fixed
-        zIndex: 1000, // выше секции
+        position: "sticky",
+        zIndex: 1000,
         padding: "16px",
         boxShadow: "1px 1px 1px 1px rgba(191,191,191,0.75);",
         bgcolor: "background.paper",

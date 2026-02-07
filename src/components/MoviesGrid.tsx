@@ -26,23 +26,19 @@ export default function MoviesGrid({
         gap: 3,
       }}
     >
-      {isLoading &&
-        Array.from({ length: limit ?? columns }).map((_, i) => (
-          <Box key={i}>
-            <Skeleton
-              variant="rectangular"
-              sx={{ borderRadius: "12px" }}
-              height="270px"
-            />
-          </Box>
-        ))}
-
-      {!isLoading && !movies.length && <Typography>Нет данных</Typography>}
-
-      {!isLoading &&
-        visibleMovies.map((movie) => (
-          <CustomCard key={movie.id} movie={movie} />
-        ))}
+      {isLoading
+        ? Array.from({ length: limit ?? columns }).map((_, i) => (
+            <Box key={i}>
+              <Skeleton
+                variant="rectangular"
+                sx={{ borderRadius: "12px" }}
+                height="270px"
+              />
+            </Box>
+          ))
+        : visibleMovies.map((movie) => (
+            <CustomCard key={movie.id} movie={movie} />
+          ))}
     </Box>
   );
 }

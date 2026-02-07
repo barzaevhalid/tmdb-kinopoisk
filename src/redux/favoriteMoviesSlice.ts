@@ -13,11 +13,11 @@ const favoriteSlice = createSlice({
       const index = state.items.findIndex((m: any) => m.id === movie.id);
 
       if (index !== -1) {
-        state.items.splice(index, 1); // Удаляем
+        state.items.splice(index, 1);
       } else {
-        state.items.push(movie); // Добавляем
+        state.items.push(movie);
       }
-      // Сохраняем "побочный эффект"
+
       localStorage.setItem("favorites", JSON.stringify(state.items));
     },
   },
