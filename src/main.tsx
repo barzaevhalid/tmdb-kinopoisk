@@ -14,7 +14,7 @@ function Root() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
+      <BrowserRouter basename="/tmdb-kinopoisk">
         <App />
       </BrowserRouter>
     </ThemeProvider>
