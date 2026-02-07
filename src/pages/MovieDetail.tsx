@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  LinearProgress,
   List,
   ListItem,
   Skeleton,

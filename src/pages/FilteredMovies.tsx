@@ -3,12 +3,8 @@ import {
   Button,
   FormControl,
   InputLabel,
-  MenuItem,
   NativeSelect,
-  Pagination,
-  Select,
   Slider,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useState } from "react";

@@ -1,17 +1,13 @@
-import { Box, Skeleton, Typography, Stack, Pagination } from "@mui/material";
-import React, { useState } from "react";
-import CustomCard from "../components/Card";
-import {
-  useGetPopularMoviesQuery,
-  useGetTopRatedMoviesQuery,
-} from "../redux/moviesApi";
+import { Box } from "@mui/material";
+
+import { useGetTopRatedMoviesQuery } from "../redux/moviesApi";
 import MoviesGrid from "../components/MoviesGrid";
 import CustomPagination from "../components/CustomPagination";
 import { usePageParam } from "../hooks/usePageParams";
 
 export default function TopRatedMovies() {
   const { page, setPage } = usePageParam();
-  const { data, isLoading, isFetching } = useGetTopRatedMoviesQuery(page);
+  const { data, isLoading } = useGetTopRatedMoviesQuery(page);
 
   return (
     <>
@@ -29,7 +25,7 @@ export default function TopRatedMovies() {
       >
         <CustomPagination
           setPage={setPage}
-          total_pages={data?.total_pages}
+          total_pages={data?.total_pages || 1}
           page={page}
         />
       </Box>

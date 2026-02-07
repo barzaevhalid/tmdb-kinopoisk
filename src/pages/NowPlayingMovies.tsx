@@ -1,14 +1,13 @@
-import React from "react";
 import { useGetNowPlayingMoviesQuery } from "../redux/moviesApi";
-import { Box, Skeleton, Typography, Stack, Pagination } from "@mui/material";
-import CustomCard from "../components/Card";
+import { Box } from "@mui/material";
+
 import CustomPagination from "../components/CustomPagination";
 import MoviesGrid from "../components/MoviesGrid";
 import { usePageParam } from "../hooks/usePageParams";
 
 export default function NowPlayingMovies() {
   const { page, setPage } = usePageParam();
-  const { data, isLoading, isFetching } = useGetNowPlayingMoviesQuery(page);
+  const { data, isLoading } = useGetNowPlayingMoviesQuery(page);
   return (
     <>
       <MoviesGrid
@@ -27,7 +26,7 @@ export default function NowPlayingMovies() {
         <CustomPagination
           page={page}
           setPage={setPage}
-          total_pages={data?.total_pages}
+          total_pages={data?.total_pages || 1}
         />
       </Box>
     </>

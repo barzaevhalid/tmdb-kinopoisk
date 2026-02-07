@@ -3,7 +3,6 @@ import type {
   CastRoot,
   DetailDto,
   Genres,
-  MovieDto,
   MoviesResponseDto,
 } from "./movies.dto";
 

@@ -17,7 +17,7 @@ export default function CustomCard({ movie }: Props) {
   const handleLikeClick = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
-    dispatch(toggleFavorite(movie)); // Всё! Redux сам обновит и стейт, и LS
+    dispatch(toggleFavorite(movie));
   };
   const movieImg = movie.poster_path
     ? `https://image.tmdb.org/t/p/w185${movie.poster_path}`

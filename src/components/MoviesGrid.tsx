@@ -1,5 +1,5 @@
-import type { MovieDto, MoviesResponseDto } from "../redux/movies.dto";
-import { Box, Skeleton, Typography } from "@mui/material";
+import type { MovieDto } from "../redux/movies.dto";
+import { Box, Skeleton } from "@mui/material";
 import CustomCard from "./Card";
 
 interface Props {

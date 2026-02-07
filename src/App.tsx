@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Layout from "./layout/Layout";
 import Main from "./pages/Main";
-import CategoryMovies from "./pages/CategoryMovies";
+
 import Favorites from "./pages/Favorites";
 import Search from "./pages/Search";
 import FilteredMovies from "./pages/FilteredMovies";

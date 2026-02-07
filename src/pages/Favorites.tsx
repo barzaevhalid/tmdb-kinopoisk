@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+
 import MoviesGrid from "../components/MoviesGrid";
 import { useAppSelector } from "../redux/store";
 

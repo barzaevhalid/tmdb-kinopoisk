@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 export default function CategoryMoviesLayout() {
   const location = useLocation();
